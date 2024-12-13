@@ -8,21 +8,21 @@
 using namespace std;
 int total_num;
 string NAME = "anon";
-
+string get_file_name();
 
 void menu()
 {
-	cout << 1 << " = " << "set_name" << endl;
-	cout << 2 << " = " << "set_color" << endl;
-	cout << 3 << " = " << "system(all files)" << endl;
-	cout << 4 << " = " << "system(special file(.txt,.cpp))" << endl;
-	cout << 5 << " = " << "Creating a directory" << endl;
-	cout << 6 << " = " << "clear" << endl;
-	cout << 7 << " = " << "Create a new file" << endl;
-	cout << 8 << " = " << "Overwrite_file" << endl;
-	cout << 9 << " = " << "update_file" << endl;
-	cout << 10 << " = " << "watch_file" << endl;
-	cout << 11 << " = " << "chanse_file" << endl;
+	cout << 1 << " = " << "Выберите пользовательское имя" << endl;
+	cout << 2 << " = " << "Выберите пользовательское освещение" << endl;
+	cout << 3 << " = " << "Вывод всех файлов" << endl;
+	cout << 4 << " = " << "Просмотр файлов с определенным форматом(.txt,.cpp))" << endl;
+	cout << 5 << " = " << " Создать директорию" << endl;
+	cout << 6 << " = " << "Очистка консоли" << endl;
+	cout << 7 << " = " << "Созданите пустого файла" << endl;
+	cout << 8 << " = " << "Перезаписать файл" << endl;
+	cout << 9 << " = " << "Расширение файла(текст добавляется в конец файла)" << endl;
+	cout << 10 << " = " << "Открытие файла" << endl;
+	cout << 11 << " = " << "Изменить содержимое файла" << endl;
 
 
 }
@@ -57,6 +57,7 @@ void colorize(int number)
 
 void set_name()
 {
+	cout << "Введите имя" << endl;
 	cin >> NAME;
 	fstream Writer_file("name.txt", ios::out);
 	if (Writer_file.is_open())
@@ -107,13 +108,11 @@ void system_spec()
 		cout << endl;
 
 	}
-
 	else if (number == 2)
 	{
 		system(command2.c_str());
 		cout << endl;
 	}
-
 	else if (number == 3)
 	{
 		cin >> form;
@@ -142,11 +141,18 @@ void system_cls()
 	system(command.c_str());
 }
 
+string get_file_name()
+{
+	string Name;
+	cout << "<<Введите имя файла>>" << endl;
+	cin >> Name;
+	return Name;
+}
+
 void Name_of_file()
 {
-	cout << "<<Введите имя файла>>" << endl;
-	string Name;
-	cin >> Name;
+	string Name = get_file_name();
+
 	fstream Write_file(Name + ".txt",ios::app);
 	Write_file.close();
 	cout << "Файл создан " << endl;
@@ -155,12 +161,10 @@ void Name_of_file()
 
 void overwrite_file()
 {
-	cout << "<<Введите имя файла>>" << endl;
-	string name;
-	cin >> name;
+	string Name = get_file_name();
 
 	string line;
-	fstream Read_file(name + ".txt", ios::in);
+	fstream Read_file(Name + ".txt", ios::in);
 	if (Read_file.is_open())
 	{
 		while (getline(Read_file, line))
@@ -177,7 +181,7 @@ void overwrite_file()
 		if (number == 1)
 		{
 			string client_word;
-			cout << "<<Введите свой текст>>" << endl;
+			cout << "<<Введите свой текст, для выхода напишите _stop_>>" << endl;
 			while (true)
 			{
 				getline(cin, client_word);
@@ -189,7 +193,7 @@ void overwrite_file()
 			}
 			
 			vec.pop_back();
-			fstream Write_file(name + ".txt", ios::out);
+			fstream Write_file(Name + ".txt", ios::out);
 			if (Write_file.is_open())
 			{
 				for (size_t i = 0; i < vec.size(); i++)
@@ -377,7 +381,7 @@ int main()
 	
 	on_load();
 	setlocale(LC_ALL, "RUS");
-	cout << "Hello " << NAME << endl;
+	cout << "Приветствуем " << NAME << endl << endl;
 	string command;
 	while (true)
 	{
